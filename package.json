@@ -1,0 +1,15 @@
+{
+  "name": "curso-udemy",
+  "version": "1.0.0",
+  "description": "Curso Udemy Aquino",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cypress": "^9.5.4"
+  }
+}

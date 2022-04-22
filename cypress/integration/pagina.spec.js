@@ -50,7 +50,7 @@ describe('Visit test page', function(){
         pagina.combo();
     })
 
-    it('should find a multiple combo element and select item', function(){
+    it.only('should find a multiple combo element and select item', function(){
 
         pagina.multipleCombo();
     })
@@ -70,7 +70,7 @@ describe('Visit test page', function(){
         pagina.timeout();
     })
 
-    it.only('should vs then', function(){
+    it('should vs then', function(){
 
         pagina.shouldThen();
     })

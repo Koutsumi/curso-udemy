@@ -7,11 +7,33 @@ class PaginaPage {
         cy.title()
             .should('be.equal', expectedTitle)
             .and('contain', expectedMessege)
+
+        let syncTitle
         
         // TODO imprimir título no console
         cy.title().then(function(title){
             console.log(title)
+
+        // TODO escrever o título em um campo de texto
+        cy.get('#formNome')
+            .type(title)
+
+        syncTitle = title
         })
+
+        cy.get('[data-cy="dataSobrenome"]')
+            .then(function($el){
+                $el.val(syncTitle)
+            })
+
+        cy.get('#elementosForm\\:sugestoes')
+            .then(function($el){
+                cy.wrap($el).type(syncTitle)
+            })
+
+        
+
+        
     }
 
     clickSimpleButton(){
@@ -92,6 +114,22 @@ class PaginaPage {
             // * pega pelo value do elemento
 
         // TODO verificar opções
+
+        cy.get('[data-test="dataEscolaridade"] option')
+            .should('have.length', 8)
+
+        const values = []
+        
+        cy.get('[data-test="dataEscolaridade"] option')
+            .then(function($arr){
+
+                $arr.each(function(){
+                    values.push(this.innerHTML)
+                })    
+                
+                expect(values).to.include.members(['Superior', 'Mestrado', 'Doutorado'])
+
+            })  
     }
 
     multipleCombo(){
@@ -99,6 +137,15 @@ class PaginaPage {
             .select(['natacao', 'Corrida'])
         // * através do value
         // TODO fazer o assert para verificar os selecionados
+
+        cy.get('[data-testid="dataEsportes"]').then(function($el){
+            expect($el.val()).to.be.deep.equal(['natacao', 'Corrida'])
+            expect($el.val()).to.have.length(2)
+        })
+
+        cy.get('[data-testid="dataEsportes"]')
+            .invoke('val')
+            .should('eql', ['natacao', 'Corrida'])
     }
 
     waitElementAvalible(){

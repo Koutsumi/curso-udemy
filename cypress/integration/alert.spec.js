@@ -122,11 +122,49 @@ describe('work with alerts', function(){
         })
     })
 
-    it.only('iframe abrindo a página',function(){
+    it('iframe abrindo a página',function(){
         cy.visit('https://wcaquino.me/cypress/frame.html')
         cy.get('#otherButton').click()
         cy.on('window:alert', function (msg){
             expect(msg).to.be.equal('Click OK!')
         })
+    })
+
+    it.only('popups', function (){
+        cy.window()
+            .then(function(win){
+                cy.stub(win, 'open').as('winOpen')
+            })
+        cy.get('#buttonPopUp').click()
+        cy.get('@winOpen')
+            .should('be.called')
+    })
+})
+
+describe.only('PopUps with links', function(){
+
+    beforeEach(function(){
+        PaginaPage.go();
+        cy.reload();
+    })
+
+    it('check popUp url', function(){
+        cy.contains('Popup2')
+            .should('have.prop', 'href')
+                .and('equal', 'https://wcaquino.me/cypress/frame.html')
+    })
+
+    it('should acesses popUp', function(){
+        cy.contains('Popup2')
+            .then(function($a){
+                const href = $a.prop('href')
+                cy.visit(href)
+            })
+    })
+
+    it('force link on same page', function(){
+        cy.contains('Popup2')
+            .invoke('removeAttr', 'target')
+                .click()
     })
 })

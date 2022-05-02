@@ -1,4 +1,3 @@
-import { it } from "mocha";
 import PaginaPage from "../../pages/PaginaPage"
 
 describe('Comands', function(){
@@ -27,8 +26,6 @@ describe('Comands', function(){
                 })
                 
             })
-            
-        
         
     })
 })
